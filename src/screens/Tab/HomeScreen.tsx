@@ -246,7 +246,6 @@ const HomeScreen: React.FC = () => {
                         )}
                     </View>
 
-                    {/* Horizontal ScrollView for categories */}
                     {loading ? (
                         <ActivityIndicator size="large" color="#FB9400" style={{ justifyContent: 'center', alignSelf: 'center', height: 70 }} />
                     ) : (
