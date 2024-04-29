@@ -81,15 +81,13 @@ const ProfileScreen: React.FC = () => {
                 <>
                     <View style={styles.ProfileUpdate}>
                         <View style={styles.profileImageContainer}>
-                            {userData?.photoURL ? (
-                                <Image source={{ uri: userData.photoURL }} style={styles.profileImage} />
-                            ) : (
-                                <Text style={styles.defaultProfileText}>No Profile Picture</Text>
-                            )}
-                        </View>
-                        <View style={styles.postcount}>
-                            <Text style={styles.userRecipeCount}>{recipesCount}</Text>
-                            <Text style={styles.userRecipeCount}>Recipes</Text>
+                            <View>
+                                <Image source={require('../../assets/images/user.png')} style={styles.profileImage} />
+                            </View>
+                            <View style={styles.postcount}>
+                                <Text style={styles.userRecipeCount}>{recipesCount}</Text>
+                                <Text style={styles.userRecipeCount}>Recipes</Text>
+                            </View>
                         </View>
                     </View>
                     <View style={styles.usernamec}>
@@ -119,18 +117,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     headerText: {
-        fontSize: 22,
+        color: '#0F172A',
+        fontSize: 18,
         fontWeight: '600',
-        color: '#000',
-        marginBottom: 10,
+        paddingVertical: 10,
+        paddingLeft: 5,
     },
     profileImageContainer: {
-        marginBottom: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '90%'
     },
     profileImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+        width: 70,
+        height: 70,
+        borderRadius: 35,
     },
     ProfileUpdate: {
         justifyContent: 'space-around',
@@ -143,8 +145,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     usernamec: {
-        margin: 10,
-        paddingLeft: 10,
+        paddingLeft: 25,
         width: '100%',
     },
     userName: {
@@ -163,8 +164,8 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     userPhoto: {
-        width: 30,
-        height: 30,
+        width: 24,
+        height: 24,
     },
 });
 

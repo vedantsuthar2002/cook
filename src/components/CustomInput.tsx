@@ -21,7 +21,7 @@ const CustomInput = (props: CustomInputProps) => {
                 secureTextEntry={props.secureTextEntry}
                 multiline={props.multiline}
                 numberOfLines={props.numberOfLines}
-                placeholderTextColor={'#000'}
+                placeholderTextColor={'#9CA3AF'}
             />
         </View>
     );
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         width: '100%',
-        borderColor: '#000',
+        borderColor: '#9CA3AF',
         borderWidth: 1,
         borderRadius: 5,
         paddingHorizontal: 10,

@@ -1,26 +1,31 @@
+// ImagePickerModel.tsx
+
 import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import ImagePicker, { launchCamera, launchImageLibrary, CameraOptions, ImagePickerResponse } from 'react-native-image-picker';
-import DocumentPicker from 'react-native-document-picker';
-const ImagePickerModel = () => {
+
+interface ImagePickerModelProps {
+    onPhotoSelect: (base64Image: string) => void; // Add prop type definition
+}
+
+const ImagePickerModel: React.FC<ImagePickerModelProps> = ({ onPhotoSelect }) => { // Update component to accept props
     const [modalVisible, setModalVisible] = useState(false);
-    const [selectedImage, setSelectedImage] = useState<ImagePickerResponse | null>(null);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null); // Changed the state type to string for storing base64 image data
 
     const takePhotoFromCamera = () => {
         const options: CameraOptions = {
             mediaType: 'photo',
-            maxWidth: 800,
-            maxHeight: 600,
-            quality: 1,
+            includeBase64: true,
         };
         launchCamera(options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+            } else if (response.errorCode) {
+                console.log('ImagePicker Error: ', response.errorCode);
             } else {
-                setSelectedImage(response);
-                setModalVisible(false);
+                const base64Image = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
+                setSelectedImage(base64Image);
+                onPhotoSelect(base64Image); // Call callback function with base64 image data
             }
         });
     };
@@ -28,18 +33,17 @@ const ImagePickerModel = () => {
     const choosePhotoFromLibrary = () => {
         const options: CameraOptions = {
             mediaType: 'photo',
-            maxWidth: 800,
-            maxHeight: 600,
-            quality: 1,
+            includeBase64: true,
         };
-        launchImageLibrary(options, (response) => {
+        launchImageLibrary(options, response => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
+            } else if (response.errorCode) {
+                console.log('ImagePicker Error: ', response.errorCode);
             } else {
-                setSelectedImage(response);
-                setModalVisible(false);
+                const base64Image = `data:${response.assets[0].type};base64,${response.assets[0].base64}`;
+                setSelectedImage(base64Image);
+                onPhotoSelect(base64Image); // Call callback function with base64 image data
             }
         });
     };
@@ -77,10 +81,10 @@ const ImagePickerModel = () => {
                     </View>
                 </View>
             </Modal>
-            {selectedImage && !selectedImage.error && (
+            {selectedImage && (
                 <View style={{ alignItems: 'center' }}>
                     <Text>Selected Image:</Text>
-                    <Image source={{ uri: selectedImage.uri }} style={{ width: 200, height: 200 }} />
+                    <Image source={{ uri: selectedImage }} style={{ width: 100, height: 100 }} />
                 </View>
             )}
         </View>
@@ -93,11 +97,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         paddingVertical: 50,
         backgroundColor: '#FFF',
-        borderColor: '#E8E8E8',
         borderWidth: 1,
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
+        borderColor: '#9CA3AF',
 
     },
     optionText: {
